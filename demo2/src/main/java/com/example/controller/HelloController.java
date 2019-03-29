@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.Map;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.async.AsyncTask;
 import com.example.entity.User;
 import com.example.entity.UserJpa;
 import com.example.service.User2TsService;
@@ -22,6 +24,9 @@ public class HelloController {
 	
 	@Autowired
 	private User2TsService user2TsService;
+	
+	@Autowired
+    private AsyncTask task;
 	
 	@RequestMapping("/index")
 	public String index() {
@@ -62,4 +67,26 @@ public class HelloController {
 		cacheManager.getCache("baseCache").clear();
 		return "success";
 	}
+	
+	@RequestMapping("/asyntask")
+    public String exeTask() throws InterruptedException{
+        
+        long begin = System.currentTimeMillis();
+        
+        Future<String> task4 = task.task4();
+        Future<String> task5 = task.task5();
+        Future<String> task6 = task.task6();
+        
+        //如果都执行往就可以跳出循环,isDone方法如果此任务完成，true
+        for(;;){
+            if (task4.isDone() && task5.isDone() && task6.isDone()) {
+                break;
+            }
+        }
+                
+        long end = System.currentTimeMillis();    
+        long total = end-begin;
+        System.out.println("执行总耗时="+total);
+        return "success";
+    }    
 }
