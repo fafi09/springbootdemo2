@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,9 @@ public class HelloController {
 	@Autowired
     private AsyncTask task;
 	
+	@Value("${name}")
+	private String name;
+	
 	@RequestMapping("/index")
 	public String index() {
 		return "index";
@@ -41,6 +45,10 @@ public class HelloController {
 		throw new RuntimeException();
 	}
 
+	@RequestMapping("/cfgname")
+	public String searchName() {
+		return name;
+	}
 	
 	@RequestMapping("/create2tsuser")
 	public String create2TsUser(@RequestParam(value = "userid") String userid,
