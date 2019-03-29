@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--启动项设置为 trace，加载 springboot 启动内部各种详细输出-->
+<!-- log4j2分别是log4j2.xml或者log4j2-spring.xml启动后spring boot自动加载 -->
 <Configuration status="trace">
     <Appenders>
         <!--添加一个控制台追加器-->
