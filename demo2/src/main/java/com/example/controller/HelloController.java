@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import com.example.service.User2TsService;
 @RestController
 @EnableAutoConfiguration
 public class HelloController {
+	
+	@Autowired
+	private CacheManager cacheManager;
 	
 	@Autowired
 	private User2TsService user2TsService;
@@ -44,6 +48,18 @@ public class HelloController {
 		user.setPassword(password);
 		user.setStatus(status);
 		user2TsService.insert(user);
+		return "success";
+	}
+	
+	@RequestMapping("/findUser")
+	public User findUserById(@RequestParam(value = "userid") String userid) {
+		User user = user2TsService.findUser(userid);
+		return user;
+	}
+	
+	@RequestMapping("/removekey")
+	public String removeKey() {
+		cacheManager.getCache("baseCache").clear();
 		return "success";
 	}
 }

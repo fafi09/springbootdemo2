@@ -36,5 +36,11 @@ public class User2TsServiceImpl implements User2TsService {
 		return 0;
 	}
 
+	@Override
+	public User findUser(String userId) {
+		User user = userMapper.findByName(userId);
+		return user;
+	}
+
 	
 }
