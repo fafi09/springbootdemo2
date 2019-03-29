@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.example.dbconfig.DBConfig2;
 import com.example.dbconfig.DBConfig3;
 
-@ComponentScan(basePackages= {"com.example.controller","com.example.handler","com.example.service","com.example.datasource"})
+@ComponentScan(basePackages= {"com.example.controller","com.example.handler","com.example.service","com.example.datasource","com.example.log.aspect"})
 @MapperScan(basePackages= {"com.example.test1.mapper","com.example.test.mapper"})
 @EnableJpaRepositories(basePackages= {"com.example.dao"})
 @EntityScan(basePackages= {"com.example.entity"})
